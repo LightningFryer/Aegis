@@ -1,3 +1,4 @@
+export const prerender = false;
 import { lucia } from "../../auth";
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
@@ -8,7 +9,7 @@ import { userTable } from "../../schema";
 
 export async function POST(context: APIContext): Promise<Response> {
 	const formData = await context.request.formData();
-	const username = formData.get("username") as string;
+	const username = formData.get("username");
 	// username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
 	// keep in mind some database (e.g. mysql) are case insensitive
 	if (
@@ -21,8 +22,8 @@ export async function POST(context: APIContext): Promise<Response> {
 			status: 400
 		});
 	}
-	const password = formData.get("password") as string;
-	if (typeof password !== "string" || password.length < 6 || password.length > 255) {
+	const password = formData.get("password");
+	if (typeof password !== "string" || password.length > 255) {
 		return new Response("Invalid password", {
 			status: 400
 		});

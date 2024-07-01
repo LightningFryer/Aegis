@@ -2,9 +2,9 @@ import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 export const userTable = sqliteTable("user", {
 	id: text("id").notNull().primaryKey(),
-    google_id: integer("google_id").unique().default(0),
+    google_id: integer("google_id").unique(),
 	username: text("username").unique(),
-    password_hash: text("password_hash"),
+    password_hash: text("password_hash").notNull(),
 	email: text("email"),
 	email_verified: integer("email_verified").default(0),
 	profile_picture: text("profile_picture").default(""),

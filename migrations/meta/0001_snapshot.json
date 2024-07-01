@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "c0d551c5-81ff-4efd-8b4e-03fbf8c92895",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "45309457-d732-43b0-bfcf-ffb3ed835255",
+  "prevId": "c0d551c5-81ff-4efd-8b4e-03fbf8c92895",
   "tables": {
     "session": {
       "name": "session",
@@ -76,7 +76,7 @@
           "name": "password_hash",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "email": {

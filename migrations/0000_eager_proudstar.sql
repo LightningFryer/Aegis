@@ -7,7 +7,7 @@ CREATE TABLE `session` (
 --> statement-breakpoint
 CREATE TABLE `user` (
 	`id` text PRIMARY KEY NOT NULL,
-	`google_id` integer DEFAULT 0,
+	`google_id` integer,
 	`username` text,
 	`password_hash` text,
 	`email` text,

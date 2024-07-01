@@ -5,5 +5,5 @@ export default defineConfig({
     security: {
 		checkOrigin: true
 	},
-	output: "server"
+	output: "hybrid"
 });
