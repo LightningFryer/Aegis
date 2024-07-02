@@ -35,7 +35,7 @@ export async function POST(context: APIContext): Promise<Response> {
         where: eq(userTable.username, username.toLowerCase())
     });
 
-    const userId = existingUser?.id;
+    const userId = existingUser?.user_id as string;
 
 	if (!existingUser) {
 		// NOTE:

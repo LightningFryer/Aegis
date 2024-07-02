@@ -1,13 +1,12 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 export const userTable = sqliteTable("user", {
-	id: text("id").notNull().primaryKey(),
-    google_id: integer("google_id").unique(),
-	username: text("username").unique(),
-    password_hash: text("password_hash").notNull(),
-	email: text("email"),
-	email_verified: integer("email_verified").default(0),
-	profile_picture: text("profile_picture").default(""),
+	id: text("user_id").notNull().primaryKey(),
+	provider_name: text("provider_name").notNull(),
+	provider_id: text("provider_id"),
+	profile_picture: text("profile_picture"),
+	username: text("username").unique().notNull(),
+    password_hash: text("password_hash"),
 });
 
 export const sessionTable = sqliteTable("session", {

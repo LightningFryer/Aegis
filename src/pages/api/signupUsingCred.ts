@@ -40,7 +40,8 @@ export async function POST(context: APIContext): Promise<Response> {
 
 	// TODO: check if username is already used
     await db.insert(userTable).values({
-        id: userId,
+        user_id: userId,
+		provider_name: "user_pass",
         username: username,
         password_hash: passwordHash,
     })

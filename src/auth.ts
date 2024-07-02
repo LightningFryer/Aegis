@@ -1,5 +1,11 @@
 import { Lucia } from "lucia";
 import { adapter } from "./drizzle";
+import { GitHub } from "arctic";
+import { config } from "dotenv"
+
+config({
+	path: ".env"
+});
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {
@@ -11,10 +17,14 @@ export const lucia = new Lucia(adapter, {
 		return {
 			// attributes has the type of DatabaseUserAttributes
 			username: attributes.username,
-            picture: attributes.picture,
+			provider: attributes.provider_name,
+			email: attributes.email,
+            picture: attributes.profile_picture,
 		};
 	}
 });
+
+export const github = new GitHub(process.env.GITHUB_CLIENT_ID!, process.env.GITHUB_CLIENT_SECRET!)
 
 declare module "lucia" {
 	interface Register {
@@ -25,5 +35,7 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
 	username: string;
-    picture?: string | null;
+	provider_name: string;
+	email?: string | null;
+    profile_picture?: string | null;
 }
