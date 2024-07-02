@@ -1,0 +1,28 @@
+---
+export const prerender = false;
+import Layout from '../layouts/Layout.astro';
+const user = Astro.locals.user;
+const session = Astro.locals.session;
+---
+
+<Layout title="Welcome to Astro.">
+	{
+		user ? (
+			<main>
+				<h1>Welcome to Astro, {user?.username}!</h1>
+				<p>Your user ID is <b>{user?.id}</b></p>
+				<p>Your session ID is <b>{session?.id}</b></p>
+				<p>Your session expires on <b>{session?.expiresAt}</b></p>
+				<form method="post" action="/api/signout">
+					<button>Signout</button>
+				</form>
+			</main>
+		) :
+		(
+			<main>
+				<h1>Welcome to Astro!</h1>
+				<a href="/signin">Signin</a>
+			</main>
+		)
+	}
+</Layout>
