@@ -1,11 +1,11 @@
 export const prerender = false;
-import { github, lucia } from "../../../../auth";
+import { github, lucia } from "@lib/auth";
 import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
-import { db } from "../../../../drizzle";
+import { db } from "@lib/drizzle";
 
 import type { APIContext } from "astro";
-import { userTable } from "../../../../schema";
+import { userTable } from "@lib/schema";
 import { and, eq } from "drizzle-orm";
 
 export async function GET(context: APIContext): Promise<Response> {

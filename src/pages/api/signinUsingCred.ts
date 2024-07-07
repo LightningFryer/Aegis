@@ -1,11 +1,11 @@
 export const prerender = false;
 import { eq } from "drizzle-orm";
-import { lucia } from "../../auth";
-import { db } from "../../drizzle"
+import { lucia } from "@lib/auth";
+import { db } from "@lib/drizzle"
 import { verify } from "@node-rs/argon2";
 
 import type { APIContext } from "astro";
-import { userTable } from "../../schema";
+import { userTable } from "@lib/schema";
 
 export async function POST(context: APIContext): Promise<Response> {
 	const formData = await context.request.formData();
@@ -26,16 +26,13 @@ export async function POST(context: APIContext): Promise<Response> {
 			status: 400
 		});
 	}
-
-	// const existingUser = await db
-	// 	.table("username")
-	// 	.where("username", "=", username.toLowerCase())
-	// 	.get();
+	
     const existingUser = await db.query.userTable.findFirst({
         where: eq(userTable.username, username.toLowerCase())
     });
 
-    const userId = existingUser?.user_id as string;
+    const userId = existingUser?.id as string;
+	const userPasswordHash = existingUser?.password_hash as string;
 
 	if (!existingUser) {
 		// NOTE:
@@ -52,7 +49,7 @@ export async function POST(context: APIContext): Promise<Response> {
 		});
 	}
 
-	const validPassword = await verify(existingUser.password_hash, password, {
+	const validPassword = await verify(userPasswordHash, password, {
 		memoryCost: 19456,
 		timeCost: 2,
 		outputLen: 32,

@@ -1,5 +1,5 @@
 export const prerender = false;
-import { lucia } from "../../auth";
+import { lucia } from "@lib/auth";
 import type { APIContext } from "astro";
 
 export async function POST(context: APIContext): Promise<Response> {
