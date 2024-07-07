@@ -1,6 +1,6 @@
 export const prerender = false;
 import { generateState } from "arctic";
-import { github } from "../../../auth";
+import { github } from "@lib/auth";
 
 import type { APIContext } from "astro";
 

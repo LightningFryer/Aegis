@@ -1,11 +1,12 @@
 export const prerender = false;
-import { lucia } from "../../auth";
+import { lucia } from "@lib/auth";
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
-import { db } from "../../drizzle"
+import { db } from "@lib/drizzle"
+import { eq } from "drizzle-orm";
 
 import type { APIContext } from "astro";
-import { userTable } from "../../schema";
+import { userTable } from "@lib/schema";
 
 export async function POST(context: APIContext): Promise<Response> {
 	const formData = await context.request.formData();
@@ -38,9 +39,19 @@ export async function POST(context: APIContext): Promise<Response> {
 		parallelism: 1
 	});
 
-	// TODO: check if username is already used
+	// Check if username is already used
+	const existingUser = await db.query.userTable.findFirst({
+        where: eq(userTable.username, username.toLowerCase())
+    });
+
+    if (existingUser) {
+		return new Response("Username already exists", {
+			status: 400
+		});
+	}
+
     await db.insert(userTable).values({
-        user_id: userId,
+        id: userId,
 		provider_name: "user_pass",
         username: username,
         password_hash: passwordHash,
