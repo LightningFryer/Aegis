@@ -12,7 +12,7 @@ A barebones template for a website with complete authentication functionality us
 Stores user information
 | Column | Description | Datatype |
 | -------- | ------------- | ------ |
-| `user_id` | Generated during callback | `integer` |
+| `id` | Generated during callback | `integer` |
 | `username` | Username of the user either retrieved from form data or provided by OAuth provider during callback | `string` |
 | `provider_name` | Can be `user_pass` for username/passwd auth or the OAuth provider's name like `github` | `string` |
 | `provider_id` | Kept as null for `user_pass` auth otherwise it is provided by the OAuth provider during the callback | `integer` or `null` |
@@ -25,7 +25,7 @@ Stores user session data
 | Column | Description | Datatype |
 | -------- | ------------- | ------ |
 | `id` | Session id | `number` |
-| `user_id` | Same as the `user_id` from user table | `number` |
+| `user_id` | Same as the `id` from user table | `number` |
 | `expires_at` | The time at which the session will expire | `number` |
 | `user` | A foreign key referencing the user table | - |
 
