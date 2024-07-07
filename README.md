@@ -1,18 +1,35 @@
-# Astro Starter Kit: Basics
+# Aegis 
+A barebones template for a website with complete authentication functionality using Astro, Drizzle ORM and Lucia-Auth.
 
-```sh
-npm create astro@latest -- --template basics
-```
+## Tech Stack
+- Astro
+- Drizzle ORM (using Turso db)
+- Lucia-auth
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Database Schema Structure
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### User Table
+Stores user information
+| Column | Description | Datatype |
+| -------- | ------------- | ------ |
+| `user_id` | Generated during callback | `integer` |
+| `username` | Username of the user either retrieved from form data or provided by OAuth provider during callback | `string` |
+| `provider_name` | Can be `user_pass` for username/passwd auth or the OAuth provider's name like `github` | `string` |
+| `provider_id` | Kept as null for `user_pass` auth otherwise it is provided by the OAuth provider during the callback | `integer` or `null` |
+| `profile_picture` | Kept as null for `user_pass` auth otherwise a string to url of user's profile picture is provided by OAuth provider at callback | `string` or `null` |
+| `password_hash` | User's hashed password which can be retireved and decrypted during user login. Kept as `null` for OAuth authentication | `string` or `null` |
+| `sessions` | A foreign key referencing the session table | - |
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+### Session Table
+Stores user session data
+| Column | Description | Datatype |
+| -------- | ------------- | ------ |
+| `id` | Session id | `number` |
+| `user_id` | Same as the `user_id` from user table | `number` |
+| `expires_at` | The time at which the session will expire | `number` |
+| `user` | A foreign key referencing the user table | - |
 
-## 🚀 Project Structure
+## Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:
 
@@ -48,7 +65,3 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
